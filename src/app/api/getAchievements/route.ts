@@ -1,17 +1,13 @@
 // eslint-disable
 import clientPromise from "@/lib/mongodb";
 import { Collection, Document } from "mongodb";
+import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-interface routeParams {
-  params: {
-    email: string;
-  };
-}
 
-export async function GET(req: Request, context: routeParams) {
-  const email = context.params.email;
+export async function GET(req: NextRequest) {
+  const email = req.nextUrl.searchParams.get("email")
 
   try {
     const client = await clientPromise; // Wait for the database connection
@@ -25,13 +21,15 @@ export async function GET(req: Request, context: routeParams) {
     if (!user) {
       return new Response("No Such User", { status: 404 });
     }
-    // if (!user.projects) {
-    //   await userCollection.updateOne(
-    //     { email: email },
-    //     { $set: { projects: [] } }
-    //   );
-    //   return Response.json({ result: [], count: 0 });
-    // }
+    console.log(user.achievements)
+    console.log(!user.achievements);
+    if (!user.achievements) {
+      await userCollection.updateOne(
+        { email: email },
+        { $set: { achievements: [] } }
+      );
+      return Response.json([]);
+    }
 
     return Response.json([...user.achievements]);
 
@@ -81,8 +79,8 @@ export async function GET(req: Request, context: routeParams) {
 //   }
 // }
 
-export async function POST(req: Request, context: routeParams) {
-  const email = context.params.email;
+export async function POST(req: NextRequest) {
+  const email = req.nextUrl.searchParams.get("email")
 
   try {
     const client = await clientPromise; // Wait for the database connection
@@ -96,12 +94,15 @@ export async function POST(req: Request, context: routeParams) {
     if (!user) {
       return new Response("No Such User", { status: 404 });
     }
-    // if (!user.projects) {
-    //   await userCollection.updateOne(
-    //     { email: email },
-    //     { $set: { projects: [] } }
-    //   );
-    // }
+    
+    console.log(user.achievements)
+    console.log(!user.achievements);
+    if (!user.achievements) {
+      await userCollection.updateOne(
+        { email: email },
+        { $set: { achievements: [] } }
+      );
+    }
 
     const data : Array<Document> = await req.json();
 
