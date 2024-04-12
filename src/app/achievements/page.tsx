@@ -23,8 +23,9 @@ export default function Achievements() {
   } = useForm<IFormInput>();
   const [achievements, setAchievements] = useState<achievement[]>([]);
   async function add_achievement(new_achievement: achievement) {
+    if (!session || !session.user || !session?.user?.email) return;
     setAchievements(() => [...achievements, new_achievement]);
-    await fetch("/api/getAchievements", {
+    await fetch(`/api/getAchievements?email=${session.user.email}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
