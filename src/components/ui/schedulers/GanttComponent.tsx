@@ -1,5 +1,10 @@
+"use client";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import "@/components/ui/schedulers/GanttComponent.css";
+// import { registerLicense } from "@syncfusion/ej2-base";
+import SyncfusionWrapper from "@/components/wrappers/SyncfusionWrapper";
+
+// import * as ReactDOM from "react-dom";
 import {
   GanttComponent,
   TaskFieldsModel,
@@ -12,7 +17,11 @@ import {
   RowDD,
   SelectionSettingsModel,
   LabelSettingsModel,
+  TimelineSettingsModel,
+  ColumnsDirective,
+  ColumnDirective,
 } from "@syncfusion/ej2-react-gantt";
+import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 
 const GanttData: object[] = [
   {
@@ -36,6 +45,8 @@ const GanttData: object[] = [
   },
 ];
 export default function CustomGanttComponent() {
+  // registerLicense(process.env.SYNCFUSION_LICENSE as string);
+  let ganttInstance: GanttComponent;
   const taskFields: TaskFieldsModel = {
     id: "task_id",
     name: "task_name",
@@ -61,24 +72,76 @@ export default function CustomGanttComponent() {
     rightLabel: "Task Name: ${taskData.task_name}",
     taskLabel: "${Progress}%",
   };
-  const toolbarOptions = ["Add", "Delete", "Indent", "Outdent"];
+  const toolbarOptions = [
+    "Add",
+    "Delete",
+    "Indent",
+    "Outdent",
+    "ZoomIn",
+    "ZoomOut",
+    "ZoomToFit",
+  ];
+
+  let timelineSettings: TimelineSettingsModel = {
+    updateTimescaleView: false,
+  };
+
+  const modes = [
+    { item: "Hour", id: "1" },
+    { item: "Day", id: "2" },
+    { item: "Week", id: "3" },
+    { item: "Month", id: "4" },
+    { item: "Year", id: "5" },
+  ];
+
+  function onChange(args:any) {
+    if (args.value === "1") {
+      ganttInstance.timelineSettings.timelineViewMode = "Hour";
+    } else if (args.value === "2") {
+      ganttInstance.timelineSettings.timelineViewMode = "Day";
+    } else if (args.value === "3") {
+      ganttInstance.timelineSettings.timelineViewMode = "Week";
+    } else if (args.value === "4") {
+      ganttInstance.timelineSettings.timelineViewMode = "Month";
+    } else if (args.value === "5") {
+      ganttInstance.timelineSettings.timelineViewMode = "Year";
+    }
+  }
+
+  const fields = { text: "item", value: "id" };
   return (
-    <GanttComponent
-      dataSource={GanttData}
-      editSettings={editOptions}
-      toolbar={toolbarOptions}
-      height="900px"
-      taskFields={taskFields}
-      allowSelection={true}
-      allowSorting={true}
-      allowResizing={true}
-      enableContextMenu={true}
-      allowRowDragAndDrop={true}
-      selectionSettings={selectionSettings}
-      allowTaskbarDragAndDrop={true}
-      labelSettings={labelSettings}
-    >
-      <Inject services={[RowDD, Edit, Selection, Toolbar, ContextMenu]} />
-    </GanttComponent>
+    <SyncfusionWrapper>
+      <DropDownListComponent
+        id="modes"
+        placeholder="Select"
+        dataSource={modes}
+        fields={fields}
+        change={onChange}
+        width="150px"
+      />
+      <GanttComponent
+        ref={(gantt) => (ganttInstance = gantt)}
+        dataSource={GanttData}
+        editSettings={editOptions}
+        toolbar={toolbarOptions}
+        height="900px"
+        taskFields={taskFields}
+        timelineSettings={timelineSettings}
+        allowSelection={true}
+        allowSorting={true}
+        allowResizing={true}
+        enableContextMenu={true}
+        allowRowDragAndDrop={true}
+        selectionSettings={selectionSettings}
+        allowTaskbarDragAndDrop={true}
+        labelSettings={labelSettings}
+      >
+        <ColumnsDirective>
+          <ColumnDirective headerText="S.No." field="task_id" width="150"></ColumnDirective>
+          <ColumnDirective headerText="Task Name" field="task_name" width="250"></ColumnDirective>
+        </ColumnsDirective>
+        <Inject services={[RowDD, Edit, Selection, Toolbar, ContextMenu]} />
+      </GanttComponent>
+    </SyncfusionWrapper>
   );
 }
