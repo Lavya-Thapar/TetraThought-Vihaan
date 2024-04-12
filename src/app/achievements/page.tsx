@@ -56,7 +56,7 @@ export default function Achievements({}: Props) {
                 />
               </div>
               <div className="flex flex-col gap-2 my-4">
-                <label className="block" name="description" id="description">
+                <label className="block" id="description">
                   Description
                 </label>
                 <textarea
@@ -66,7 +66,7 @@ export default function Achievements({}: Props) {
                 />
               </div>
               <div className="flex flex-col gap-2 my-4">
-                <label className="block " name="date">
+                <label className="block ">
                   Date
                 </label>
                 <input
