@@ -21,7 +21,11 @@ import {
   ColumnsDirective,
   ColumnDirective,
 } from "@syncfusion/ej2-react-gantt";
+
+import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data"
+
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
+import { useSession } from "next-auth/react";
 
 const GanttData: object[] = [
   {
@@ -45,6 +49,8 @@ const GanttData: object[] = [
   },
 ];
 export default function CustomGanttComponent() {
+  const session = useSession()
+  const email = session.data?.user?.email
   const taskFields: TaskFieldsModel = {
     id: "task_id",
     name: "task_name",
@@ -104,7 +110,17 @@ export default function CustomGanttComponent() {
   //   } else if (args.value === "5") {
   //     ganttInstance.timelineSettings.timelineViewMode = "Year";
   //   }
-  }
+  // }
+
+  const datasource = React.useMemo<DataManager>(
+    () =>
+      new DataManager({
+        url: `http://localhost:3000/api/users/GetData/${email}/${"default"}/`, // "default is placeholder for now"
+        adaptor: new WebApiAdaptor(),
+        crossDomain: true,
+      }),
+    [email]
+  );
 
   const fields = { text: "item", value: "id" };
   return (
@@ -114,7 +130,6 @@ export default function CustomGanttComponent() {
         placeholder="Select"
         dataSource={modes}
         fields={fields}
-        change={onChange}
         width="150px"
       />
       <GanttComponent
