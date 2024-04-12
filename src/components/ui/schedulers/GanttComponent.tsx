@@ -45,8 +45,6 @@ const GanttData: object[] = [
   },
 ];
 export default function CustomGanttComponent() {
-  // registerLicense(process.env.SYNCFUSION_LICENSE as string);
-  let ganttInstance: GanttComponent;
   const taskFields: TaskFieldsModel = {
     id: "task_id",
     name: "task_name",
@@ -94,18 +92,18 @@ export default function CustomGanttComponent() {
     { item: "Year", id: "5" },
   ];
 
-  function onChange(args:any) {
-    if (args.value === "1") {
-      ganttInstance.timelineSettings.timelineViewMode = "Hour";
-    } else if (args.value === "2") {
-      ganttInstance.timelineSettings.timelineViewMode = "Day";
-    } else if (args.value === "3") {
-      ganttInstance.timelineSettings.timelineViewMode = "Week";
-    } else if (args.value === "4") {
-      ganttInstance.timelineSettings.timelineViewMode = "Month";
-    } else if (args.value === "5") {
-      ganttInstance.timelineSettings.timelineViewMode = "Year";
-    }
+  // function onChange(args:any) {
+  //   if (args.value === "1") {
+  //     ganttInstance.timelineSettings.timelineViewMode = "Hour";
+  //   } else if (args.value === "2") {
+  //     ganttInstance.timelineSettings.timelineViewMode = "Day";
+  //   } else if (args.value === "3") {
+  //     ganttInstance.timelineSettings.timelineViewMode = "Week";
+  //   } else if (args.value === "4") {
+  //     ganttInstance.timelineSettings.timelineViewMode = "Month";
+  //   } else if (args.value === "5") {
+  //     ganttInstance.timelineSettings.timelineViewMode = "Year";
+  //   }
   }
 
   const fields = { text: "item", value: "id" };
@@ -120,7 +118,6 @@ export default function CustomGanttComponent() {
         width="150px"
       />
       <GanttComponent
-        ref={(gantt) => (ganttInstance = gantt)}
         dataSource={GanttData}
         editSettings={editOptions}
         toolbar={toolbarOptions}
