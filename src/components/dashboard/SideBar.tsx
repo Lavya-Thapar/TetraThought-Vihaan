@@ -46,7 +46,9 @@ const SideBar = (props: Props) => {
                   "cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
                 }
               >
-                Resources
+                <Link href={''}>
+                    Resources
+                </Link>
               </li>
               <li
                 className={
@@ -62,7 +64,9 @@ const SideBar = (props: Props) => {
                   "cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
                 }
               >
-                Achievements
+                <Link href={'/achievements'}>
+                    Achievements
+                </Link>
               </li>
             </ul>
           </div>
