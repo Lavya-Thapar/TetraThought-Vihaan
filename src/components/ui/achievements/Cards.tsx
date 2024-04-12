@@ -6,8 +6,10 @@ type Props = {
     date:Date,
 }
 
-export default function Cards({}: Props) {
+export default function Cards({achievement}: Props) {
   return (
-    <div>Cards</div>
+    <div className=''>
+
+    </div>
   )
 }

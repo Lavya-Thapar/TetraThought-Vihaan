@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useState} from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type IFormInput = {
@@ -20,9 +20,11 @@ export default function Achievements({}: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>();
-  const achievements:achievement[] = achievementsList;
+  const [achievements,setAchievements] = useState<achievement[]>(achievementsList);
   const onSubmit = (data: IFormInput) => {
-    console.log(data);
+    let temp = [...achievements];
+    temp.push(data);
+    setAchievements(temp);
   };
   return (
     <>
@@ -79,7 +81,7 @@ export default function Achievements({}: Props) {
               />
             </form>
           </div>
-          <hr className="border-gray-300 "></hr>
+          <hr className="border-gray-200 "></hr>
           <div className=" my-2 ">
             <h2 className="text-2xl font-semibold mb-6">Your Achievements</h2>
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-4 ">
