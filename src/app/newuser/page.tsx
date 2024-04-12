@@ -50,8 +50,6 @@ export default function Page() {
     "Having difficulty understanding a particular topic of any subject?",
 
     "Any academic achievement that you want to share with us today?",
-    // resources
-    "Want online resources to understand any concept?",
   ];
   const router = useRouter();
   function handleClick(option: number) {
@@ -60,7 +58,7 @@ export default function Page() {
     } else if (option == 1) {
       router.replace("/chat");
     } else if (option == 2) {
-      router.replace("/achievement");
+      router.replace("/achievements");
     } else {
       router.replace("/resources");
     }
@@ -101,18 +99,10 @@ export default function Page() {
             </li>
             <li>
               <button
-                className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
-                onClick={() => router.push("/achievement")}
+                className="pt-5 lg:py-0 block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
+                onClick={() => router.push("/achievements")}
               >
                 Your Achievements
-              </button>
-            </li>
-            <li>
-              <button
-                className="pt-5 lg:py-0 lg:border-0 block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
-                onClick={() => router.push("/resources")}
-              >
-                Your Resources
               </button>
             </li>
           </ul>
@@ -136,10 +126,9 @@ export default function Page() {
               className={cn("transition-all", {
                 "-translate-x-[150vw]": !optionsVisible,
                 "translate-x-2": optionsVisible,
-                "duration-300": idx == 0,
-                "duration-500": idx == 1,
-                "duration-700": idx == 2,
-                "duration-1000": idx == 3,
+                "duration-500": idx == 0,
+                "duration-700": idx == 1,
+                "duration-1000": idx == 2,
               })}
             >
               <button
