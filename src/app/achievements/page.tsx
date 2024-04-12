@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -22,8 +23,9 @@ export default function Achievements() {
   } = useForm<IFormInput>();
   const [achievements, setAchievements] = useState<achievement[]>([]);
   async function add_achievement(new_achievement: achievement) {
+    if (!session || !session.user || !session?.user?.email) return;
     setAchievements(() => [...achievements, new_achievement]);
-    await fetch("/api/getAchievements", {
+    await fetch(`/api/getAchievements?email=${session.user.email}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,14 +36,18 @@ export default function Achievements() {
   const onSubmit = (data: IFormInput) => {
     add_achievement(data);
   };
+  const { data: session } = useSession();
   useEffect(() => {
     async function get_data() {
-      const raw_data = await fetch("/api/getAchievements");
+      if (!session || !session.user || !session?.user?.email) return;
+      const raw_data = await fetch(
+        `/api/getAchievements?email=${session.user.email}`
+      );
       const data = (await raw_data.json()) as Array<achievement>;
       setAchievements(data);
     }
     get_data();
-  }, []);
+  }, [session]);
   return (
     <>
       <div className="my-6">
