@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -56,14 +55,15 @@ export default function Page() {
   function handleClick(option: number) {}
   return (
     <main className="py-5 min-h-screen bg-slate-200 text-gray-900">
-      <Navbar />
-      <div className="text-center text-6xl tracking-wide mt-12">
+      <div className="text-center text-6xl md:text-8xl tracking-wide mt-12">
         <div id="type-writer-heading"></div>
       </div>
-      <div
-        className="text-xl py-10 px-14 text-muted-foreground"
-        id="type-writer-intro"
-      ></div>
+      <div className="max-w-prose mx-auto">
+        <div
+          className="text-xl py-10 px-14 text-muted-foreground md:text-2xl"
+          id="type-writer-intro"
+        ></div>
+      </div>
       <div className="my-8 mx-10 text-3xl" id="type-writer-head-2"></div>
       <div className="relative" id="options">
         {options.map((option, idx) => {
@@ -71,7 +71,7 @@ export default function Page() {
             <div
               key={idx}
               className={cn("transition-all", {
-                "-translate-x-full": !optionsVisible,
+                "-translate-x-[150vw]": !optionsVisible,
                 "translate-x-2": optionsVisible,
                 "duration-300": idx == 0,
                 "duration-500": idx == 1,
