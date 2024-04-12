@@ -20,7 +20,7 @@ export default function UserInfoContainer() {
         name: "Manikya",
         photo: session.user.image,
         photoBase64: false,
-        achievements: ["Completed deadline 1", "Completed deadline 2"],
+        achievements: [],
       };
       setUser(account);
     }
