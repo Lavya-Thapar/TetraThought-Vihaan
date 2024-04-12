@@ -1,10 +1,10 @@
 import SideBar from "@/components/dashboard/SideBar";
 
-export default function RootLayout({
+export default function layout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <>
       <div className="flex ">

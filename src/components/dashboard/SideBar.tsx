@@ -37,7 +37,9 @@ const SideBar = (props: Props) => {
                   "cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
                 }
               >
-                Chat
+                <Link href={'chat'}>
+                    Chat
+                </Link>
               </li>
               <li
                 className={
