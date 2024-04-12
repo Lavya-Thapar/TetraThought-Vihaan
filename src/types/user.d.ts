@@ -3,5 +3,9 @@ export type User = {
   photo: string;
   name: string;
   photoBase64?: bool;
-  achievements: Array<string>;
+  achievements: Array<{
+    title: string;
+    description: string;
+    date: Date;
+  }>;
 };
