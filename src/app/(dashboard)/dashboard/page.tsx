@@ -38,12 +38,5 @@ export default function Dashboard() {
       handle_user_login();
     }
   }, [status, router, session]);
-  return (
-    <div>
-      Dashboard
-      <Button className="block" onClick={() => signOut()}>
-        Logout
-      </Button>
-    </div>
-  );
+  return <div></div>;
 }

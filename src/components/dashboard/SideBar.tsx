@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import {
   ChevronDown,
   ChevronLeft,
@@ -9,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import DropDown from "./DropDown";
+import { Button } from "../ui/button";
 type Props = {};
 
 const SideBar = (props: Props) => {
@@ -32,45 +34,40 @@ const SideBar = (props: Props) => {
           <hr></hr>
           <div className="p-4">
             <ul>
-              <li
-                className={
-                  "cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
-                }
-              >
-                <Link href={'chat'}>
-                    Chat
+              <li>
+                <Link
+                  className="cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
+                  href={"chat"}
+                >
+                  Chat
                 </Link>
               </li>
-              <li
-                className={
-                  "cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
-                }
-              >
-                <Link href={''}>
-                    Resources
+              <li>
+                <Link
+                  className="cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
+                  href={"/timeline"}
+                >
+                  Scheduler
                 </Link>
               </li>
-              <li
-                className={
-                  "cursor-pointer flex justify-between p-2 rounded-md"
-                }
-              >
-                <DropDown parent="Scheduler" dropLinks={dropLinks}>
-
-                </DropDown>
-              </li>
-              <li
-                className={
-                  "cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
-                }
-              >
-                <Link href={'/achievements'}>
-                    Achievements
+              <li>
+                <Link
+                  className="cursor-pointer flex justify-between p-2 rounded-md text-gray-600 hover:text-black hover:bg-gray-200"
+                  href={"/achievements"}
+                >
+                  Achievements
                 </Link>
               </li>
             </ul>
           </div>
           <hr></hr>
+          <Button
+            className="block fixed bottom-5 left-5"
+            size={"lg"}
+            onClick={() => signOut()}
+          >
+            Logout
+          </Button>
         </div>
       )}
     </>

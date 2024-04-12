@@ -25,11 +25,6 @@ export default function LandingPage() {
         "Keep track of the achievements and deadlines of the user to motivate him/her as well as prevent procrastination.",
     },
     {
-      title: "Mental Health Guide",
-      content:
-        "Provide personalised guidance according to the profile of the users to provide mental peace and help them identify their achievements/failures.",
-    },
-    {
       title: "Resource Suggester",
       content:
         "Identify the subjects where users lag and collect resources in a single place to help them.",
@@ -39,13 +34,11 @@ export default function LandingPage() {
   return (
     <>
       <div className="flex w-[80%] mx-auto p-4 my-5 align-center justify-between">
-        <img src="/logo.png" className="w-56" width={224} height={150}/>
+        <img src="/logo.png" className="w-56" width={224} height={150} />
         <div className="flex flex-col justify-center">
-            <Button>
-                <Link href={'/login'}>
-                    Log In
-                </Link>
-            </Button>
+          <Button>
+            <Link href={"/login"}>Log In</Link>
+          </Button>
         </div>
       </div>
       <Hero></Hero>
@@ -72,18 +65,16 @@ export default function LandingPage() {
                     <div className="inline-block rounded-lg bg-gray-100 px-3 py-1 text-sm dark:bg-gray-800">
                       Personalized Assistance
                     </div>
-                    <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                    <h2
+                      className="text-3xl font-bold tracking-tighter sm:text-5xl"
+                      id="second"
+                    >
                       Your AI Study Buddy
                     </h2>
                     <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                       Let the chatbot handle the details, so you can focus on
                       learning. Personalized assistance available 24/7.
                     </p>
-                  </div>
-                  <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                    <Button className="inline-flex h-10 items-center justify-center rounded-md border border-gray-200 bg-white px-8 text-sm text-gray-600 font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300">
-                      <Link href={"#"}>Tour the Platform</Link>
-                    </Button>
                   </div>
                 </div>
               </div>
