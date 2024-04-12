@@ -88,3 +88,13 @@
   @import '../../node_modules/@syncfusion/ej2-popups/styles/material.css';
   @import '../../node_modules/@syncfusion/ej2-richtexteditor/styles/material.css';
   @import '../../node_modules/@syncfusion/ej2-treegrid/styles/material.css';
+
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
