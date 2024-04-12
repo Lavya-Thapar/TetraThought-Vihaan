@@ -3,7 +3,6 @@ import * as React from "react";
 import "@/components/ui/schedulers/GanttComponent.css";
 // import { registerLicense } from "@syncfusion/ej2-base";
 import SyncfusionWrapper from "@/components/wrappers/SyncfusionWrapper";
-
 // import * as ReactDOM from "react-dom";
 import {
   GanttComponent,
@@ -27,29 +26,9 @@ import { DataManager, WebApiAdaptor } from "@syncfusion/ej2-data"
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 import { useSession } from "next-auth/react";
 
-const GanttData: object[] = [
-  {
-    task_id: "task2",
-    task_name: "Task 2",
-    start_time: "2024-03-23T17:49:40.681Z",
-    end_time: "2024-03-29T02:30:00.681Z",
-    Progress: 75,
-    description: "Description for Task 3",
-    completed: false,
-  },
-  {
-    task_id: "task1",
-    task_name: "Task 1",
-    start_time: "2024-03-23T17:49:40.681Z",
-    end_time: "2024-03-29T02:30:00.681Z",
-    parent_id: "task2",
-    Progress: 25,
-    description: "Description for Task 3",
-    completed: false,
-  },
-];
 export default function CustomGanttComponent() {
   const session = useSession()
+  const [current_url, setcurrent_url] = React.useState<string>("");
   const email = session.data?.user?.email
   const taskFields: TaskFieldsModel = {
     id: "task_id",
@@ -111,11 +90,16 @@ export default function CustomGanttComponent() {
   //     ganttInstance.timelineSettings.timelineViewMode = "Year";
   //   }
   // }
+  React.useEffect(() => {
+    setcurrent_url(window.location.origin)
+  })
+  
+  console.log(current_url)
 
   const datasource = React.useMemo<DataManager>(
     () =>
       new DataManager({
-        url: `http://localhost:3000/api/users/GetData/${email}/${"default"}/`, // "default is placeholder for now"
+        url: `http://localhost:3000/api/GetData/manikyasharma.ms@gmail.com/default`, // "default is placeholder for now"
         adaptor: new WebApiAdaptor(),
         crossDomain: true,
       }),
@@ -133,7 +117,7 @@ export default function CustomGanttComponent() {
         width="150px"
       />
       <GanttComponent
-        dataSource={GanttData}
+        dataSource={datasource}
         editSettings={editOptions}
         toolbar={toolbarOptions}
         height="900px"
