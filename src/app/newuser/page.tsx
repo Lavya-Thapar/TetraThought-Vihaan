@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -56,7 +55,6 @@ export default function Page() {
   function handleClick(option: number) {}
   return (
     <main className="py-5 min-h-screen bg-slate-200 text-gray-900">
-      <Navbar />
       <div className="text-center text-6xl md:text-8xl tracking-wide mt-12">
         <div id="type-writer-heading"></div>
       </div>
