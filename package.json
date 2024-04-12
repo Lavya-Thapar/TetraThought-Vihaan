@@ -16,6 +16,7 @@
     "clsx": "^2.1.0",
     "hamburger-react": "^2.5.0",
     "lucide-react": "^0.367.0",
+    "mongodb": "^6.5.0",
     "next": "14.1.0",
     "next-auth": "^4.24.7",
     "react": "^18",
@@ -25,6 +26,7 @@
     "typewriter-effect": "^2.21.0"
   },
   "devDependencies": {
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
