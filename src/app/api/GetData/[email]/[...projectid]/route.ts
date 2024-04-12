@@ -40,6 +40,8 @@ export async function GET(req: Request, context: routeParams) {
       return new Response("No Such Project id to fetch", { status: 404 });
     }
 
+
+
     if (!project.tasks) {
       await userCollection.updateOne(
         { email: email },
@@ -92,20 +94,20 @@ export async function PUT(req: Request, context: routeParams) {
     if (!project) {
       return new Response("No Such Project id to fetch", { status: 404 });
     }
-
-    if (!project.tasks) {
-      await userCollection.updateOne(
-        { email: email },
-        { $set: { "projects.$[project].tasks": [] } },
-        { arrayFilters: [{ "project.projectid": projectid }] }
-      );
-    }
+    console.log(project.tasks)
+    // if (!project.tasks) {
+    //   await userCollection.updateOne(
+    //     { email: email },
+    //     { $set: { "projects.$[project].tasks": [] } },
+    //     { arrayFilters: [{ "project.projectid": projectid }] }
+    //   );
+    // }
 
     const data = await req.json();
 
     for (const item of data) {
       const { task_id, ...updatedData } = item; // Extract email and TaskID from item
-      await userCollection.updateOne(
+      await userCollection.findOneAndUpdate(
         { email }, // Find user with matching email and task_id
         { $set: { "projects.$[project].tasks.$[task]": item } },
         {
@@ -113,7 +115,6 @@ export async function PUT(req: Request, context: routeParams) {
             { "project.projectid": projectid },
             { "task.task_id": task_id },
           ],
-          upsert: true,
         }
       );
     }
@@ -156,13 +157,13 @@ export async function POST(req: Request, context: routeParams) {
       return new Response("No Such Project id to fetch", { status: 404 });
     }
 
-    if (!project.tasks) {
-      await userCollection.updateOne(
-        { email: email },
-        { $set: { "projects.$[project].tasks": [] } },
-        { arrayFilters: [{ "project.projectid": projectid }] }
-      );
-    }
+    // if (!project.tasks) {
+    //   await userCollection.updateOne(
+    //     { email: email },
+    //     { $set: { "projects.$[project].tasks": [] } },
+    //     { arrayFilters: [{ "project.projectid": projectid }] }
+    //   );
+    // }
 
     const data = await req.json();
     for (let item of data) {
@@ -188,7 +189,7 @@ export async function DELETE(req: Request, context: routeParams) {
   const email = context.params.email;
   const projectid = context.params.projectid[0];
   const task_id = context.params.projectid[1];
-
+  console.log(context)
   try {
     const client = await clientPromise; // Wait for the database connection
     const db = client.db("studybuddy");
@@ -215,13 +216,13 @@ export async function DELETE(req: Request, context: routeParams) {
       return new Response("No Such Project id to fetch", { status: 404 });
     }
 
-    if (!project.tasks) {
-      await userCollection.updateOne(
-        { email: email },
-        { $set: { "projects.$[project].tasks": [] } },
-        { arrayFilters: [{ "project.projectid": projectid }] }
-      );
-    }
+    // if (!project.tasks) {
+    //   await userCollection.updateOne(
+    //     { email: email },
+    //     { $set: { "projects.$[project].tasks": [] } },
+    //     { arrayFilters: [{ "project.projectid": projectid }] }
+    //   );
+    // }
 
     await userCollection.updateOne(
       { email: email },

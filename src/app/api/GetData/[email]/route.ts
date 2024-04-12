@@ -4,7 +4,6 @@ import { Collection, Document } from "mongodb";
 
 export const dynamic = "force-dynamic";
 
-
 interface routeParams {
   params: {
     email: string;
@@ -130,6 +129,7 @@ export async function DELETE(req: Request, context: routeParams) {
     const client = await clientPromise; // Wait for the database connection
     const db = client.db("studybuddy");
     const userCollection = db.collection("accounts");
+    console.log(projectid)
 
     if (!email) {
       return new Response("user Id must be present", { status: 404 });
@@ -143,6 +143,7 @@ export async function DELETE(req: Request, context: routeParams) {
         { email: email },
         { $set: { projects: [] } }
       );
+      return new Response("Projects Already Empty and Deleted", { status: 201 })
     }
 
 

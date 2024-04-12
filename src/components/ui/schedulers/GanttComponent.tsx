@@ -28,6 +28,7 @@ import { useSession } from "next-auth/react";
 
 export default function CustomGanttComponent() {
   const session = useSession()
+  const [current_url, setcurrent_url] = React.useState<string>("");
   const email = session.data?.user?.email
   const taskFields: TaskFieldsModel = {
     id: "task_id",
@@ -89,13 +90,16 @@ export default function CustomGanttComponent() {
   //     ganttInstance.timelineSettings.timelineViewMode = "Year";
   //   }
   // }
-  const current_url = window.location.origin
+  React.useEffect(() => {
+    setcurrent_url(window.location.origin)
+  })
+  
   console.log(current_url)
 
   const datasource = React.useMemo<DataManager>(
     () =>
       new DataManager({
-        url: `${current_url}/api/GetData/manikyasharma.ms@gmail.com/default/`, // "default is placeholder for now"
+        url: `http://localhost:3000/api/GetData/manikyasharma.ms@gmail.com/default`, // "default is placeholder for now"
         adaptor: new WebApiAdaptor(),
         crossDomain: true,
       }),
