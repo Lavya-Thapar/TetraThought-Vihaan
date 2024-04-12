@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 //@ts-ignore
 import TypeWriter from "typewriter-effect/dist/core";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   const [optionsVisible, setOptionsVisible] = useState<boolean>(false);
@@ -52,7 +53,18 @@ export default function Page() {
     // resources
     "Want online resources to understand any concept?",
   ];
-  function handleClick(option: number) {}
+  const router = useRouter();
+  function handleClick(option: number) {
+    if (option == 0) {
+      router.replace("/timeline");
+    } else if (option == 1) {
+      router.replace("/chat");
+    } else if (option == 2) {
+      router.replace("/achievement");
+    } else {
+      router.replace("/resources");
+    }
+  }
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <main className="pb-5 min-h-screen bg-slate-200 text-gray-900">
@@ -72,22 +84,34 @@ export default function Page() {
         >
           <ul className="lg:flex lg:space-x-5">
             <li>
-              <button className="pb-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+              <button
+                className="pb-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
+                onClick={() => router.push("/dashboard")}
+              >
                 Dashboard
               </button>
             </li>
             <li>
-              <button className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+              <button
+                className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
+                onClick={() => router.push("/timeline")}
+              >
                 Your Schedules
               </button>
             </li>
             <li>
-              <button className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+              <button
+                className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
+                onClick={() => router.push("/achievement")}
+              >
                 Your Achievements
               </button>
             </li>
             <li>
-              <button className="pt-5 lg:py-0 lg:border-0 block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+              <button
+                className="pt-5 lg:py-0 lg:border-0 block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground"
+                onClick={() => router.push("/resources")}
+              >
                 Your Resources
               </button>
             </li>
