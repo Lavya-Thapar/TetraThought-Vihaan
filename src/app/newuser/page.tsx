@@ -1,7 +1,6 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
+import Hamburger from "hamburger-react";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 //@ts-ignore
@@ -17,7 +16,7 @@ export default function Page() {
     typewriter_heading.typeString("Welcome to StudyBuddy").start();
     const typewriter_intro = new TypeWriter("#type-writer-intro", {
       autoStart: true,
-      delay: 25,
+      delay: 15,
     });
     typewriter_intro
       .pauseFor(2000)
@@ -32,7 +31,7 @@ export default function Page() {
       delay: 25,
     });
     typewriter_head_2
-      .pauseFor(8000)
+      .pauseFor(6000)
       .typeString(
         "Shall we start by describing how do we feel today, academically?"
       )
@@ -54,16 +53,56 @@ export default function Page() {
     "Want online resources to understand any concept?",
   ];
   function handleClick(option: number) {}
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <main className="py-5 min-h-screen bg-slate-200 text-gray-900">
-      <Navbar />
-      <div className="text-center text-6xl tracking-wide mt-12">
+    <main className="pb-5 min-h-screen bg-slate-200 text-gray-900">
+      <nav className="flex items-center justify-between px-2 py-5 bg-white rounded-b-lg">
+        <div className="text-xl font-bold">StudyBuddy</div>
+        <div className="lg:hidden">
+          <Hamburger toggled={isOpen} toggle={setIsOpen} />
+        </div>
+        <div
+          className={cn(
+            "lg:relative lg:flex text-xl bg-[rgba(0,0,0,0.8)] lg:bg-transparent lg:text-slate-800 text-white backdrop-blur-sm px-3 py-5 rounded-lg absolute transition-all right-5 top-16 lg:right-0 lg:top-0",
+            {
+              "translate-x-0": isOpen,
+              "translate-x-56 lg:translate-x-0": !isOpen,
+            }
+          )}
+        >
+          <ul className="lg:flex lg:space-x-5">
+            <li>
+              <button className="pb-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+                Dashboard
+              </button>
+            </li>
+            <li>
+              <button className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+                Your Schedules
+              </button>
+            </li>
+            <li>
+              <button className="py-5 lg:py-0 lg:border-0 border-b block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+                Your Achievements
+              </button>
+            </li>
+            <li>
+              <button className="pt-5 lg:py-0 lg:border-0 block w-full text-left hover:text-blue-400 transition-colors border-muted-foreground">
+                Your Resources
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div className="text-center text-6xl md:text-8xl tracking-wide mt-12">
         <div id="type-writer-heading"></div>
       </div>
-      <div
-        className="text-xl py-10 px-14 text-muted-foreground"
-        id="type-writer-intro"
-      ></div>
+      <div className="max-w-prose mx-auto">
+        <div
+          className="text-xl py-10 px-14 text-muted-foreground md:text-2xl"
+          id="type-writer-intro"
+        ></div>
+      </div>
       <div className="my-8 mx-10 text-3xl" id="type-writer-head-2"></div>
       <div className="relative" id="options">
         {options.map((option, idx) => {
@@ -71,7 +110,7 @@ export default function Page() {
             <div
               key={idx}
               className={cn("transition-all", {
-                "-translate-x-full": !optionsVisible,
+                "-translate-x-[150vw]": !optionsVisible,
                 "translate-x-2": optionsVisible,
                 "duration-300": idx == 0,
                 "duration-500": idx == 1,

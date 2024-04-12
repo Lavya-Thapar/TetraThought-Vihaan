@@ -14,11 +14,11 @@ export default function Dashboard() {
     }
   }, [status, router]);
   // determine first time login
-  useEffect(() => {
-    // TODO: Dummy for now
-    setFirstTime(true);
-    router.push("/newuser");
-  }, []);
+  // useEffect(() => {
+  //   // TODO: Dummy for now
+  //   setFirstTime(true);
+  //   router.push("/newuser");
+  // }, [router]);
   return (
     <div>
       Dashboard
