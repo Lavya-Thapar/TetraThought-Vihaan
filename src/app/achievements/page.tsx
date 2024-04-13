@@ -24,13 +24,14 @@ export default function Achievements() {
   const [achievements, setAchievements] = useState<achievement[]>([]);
   async function add_achievement(new_achievement: achievement) {
     if (!session || !session.user || !session?.user?.email) return;
-    setAchievements(() => [...achievements, new_achievement]);
+    setAchievements((prev) => [...prev, new_achievement]);
+
     await fetch(`/api/getAchievements?email=${session.user.email}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(achievements),
+      body: JSON.stringify([new_achievement]),
     });
   }
   const onSubmit = (data: IFormInput) => {
@@ -115,7 +116,9 @@ export default function Achievements() {
                       {achievement.title}
                     </span>
                     <p>{achievement.description}</p>
-                    <span>{achievement.date.toString()}</span>
+                    <span>
+                      {achievement.date && achievement.date.toString()}
+                    </span>
                   </div>
                 );
               })}
