@@ -107,7 +107,7 @@ export async function PUT(req: Request, context: routeParams) {
 
     for (const item of data) {
       const { task_id, ...updatedData } = item; // Extract email and TaskID from item
-      await userCollection.findOneAndUpdate(
+      await userCollection.updateOne(
         { email }, // Find user with matching email and task_id
         { $set: { "projects.$[project].tasks.$[task]": item } },
         {
