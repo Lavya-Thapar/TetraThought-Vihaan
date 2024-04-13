@@ -1,15 +1,15 @@
 "use client";
-import { User } from "@/types/user";
+import { Account } from "@/types/user";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function ProfilePic() {
   const { data: session } = useSession();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<Account | null>(null);
   useEffect(() => {
     if (session && session.user && session.user.email && session.user.image) {
-      const account: User = {
+      const account: Account = {
         email: session.user.email,
         name: "Manikya",
         photo: session.user.image,

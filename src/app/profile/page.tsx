@@ -5,30 +5,27 @@ import ProfilePic from "@/components/account/ProfilePic";
 import { useEffect, useState } from "react";
 import React from "react";
 import { useSession } from "next-auth/react";
-import { User } from "@/types/user";
-import { Button } from "@/components/ui/button";
-import { Share } from "lucide-react";
+import { Account } from "@/types/user";
+import Link from "next/link";
 
 export default function UserInfoContainer() {
   const { data: session } = useSession();
-  const [user, setUser] = useState<User | null>(null);
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [user, setUser] = useState<Account | null>(null);
   useEffect(() => {
-    if (session && session.user && session.user.email && session.user.image) {
-      const account: User = {
-        email: session.user.email,
-        name: "Manikya",
-        photo: session.user.image,
-        photoBase64: false,
-        achievements: [],
-      };
+    if (!session || !session.user || !session.user.email || !session.user.image)
+      return;
+    async function get_data() {
+      const raw_account = await fetch(
+        `/api/account?email=${session?.user?.email}`
+      );
+      const account = await raw_account.json();
       setUser(account);
     }
+    get_data();
   }, [session]);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Button>{/* TODO*/}</Button>
       <div className="flex-1 flex flex-col items-center justify-center w-full md:gap-32">
         <div className="flex flex-col items-center space-y-3 pt-[4rem] text-center -translate-y-1/2 md:translate-y-0">
           <div className="flex h-32 w-32 md:h-52 md:w-52 flex-col items-center justify-center overflow-hidden rounded-full bg-slate-300 align-middle dark:border-2 dark:border-slate-400">
@@ -44,15 +41,24 @@ export default function UserInfoContainer() {
           </div>
         </div>
         <div className="flex items-center justify-around gap-5 w-full px-5 max-w-prose">
-          <button className="text-center sm:text-lg flex-1 py-10 rounded-lg bg-slate-200 text-sm hover:bg-slate-800 hover:text-slate-200 transition-colors">
+          <Link
+            href="/achievements"
+            className="text-center sm:text-lg flex-1 py-10 rounded-lg bg-slate-200 text-sm hover:bg-slate-800 hover:text-slate-200 transition-colors"
+          >
             Achievements
-          </button>
-          <button className="text-center sm:text-lg flex-1 py-10 rounded-lg bg-slate-200 text-sm hover:bg-slate-800 hover:text-slate-200 transition-colors">
+          </Link>
+          <Link
+            href="/timeline"
+            className="text-center sm:text-lg flex-1 py-10 rounded-lg bg-slate-200 text-sm hover:bg-slate-800 hover:text-slate-200 transition-colors"
+          >
             Schedule
-          </button>
-          <button className="text-center sm:text-lg flex-1 py-10 rounded-lg bg-slate-200 text-sm hover:bg-slate-800 hover:text-slate-200 transition-colors">
+          </Link>
+          <Link
+            href="/dashboard"
+            className="text-center sm:text-lg flex-1 py-10 rounded-lg bg-slate-200 text-sm hover:bg-slate-800 hover:text-slate-200 transition-colors"
+          >
             Dashboard
-          </button>
+          </Link>
         </div>
       </div>
     </div>
