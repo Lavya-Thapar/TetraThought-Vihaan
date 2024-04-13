@@ -5,12 +5,12 @@ import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-
 export async function GET(req: NextRequest) {
-  const email = req.nextUrl.searchParams.get("email")
+  const email = req.nextUrl.searchParams.get("email");
 
   try {
     const client = await clientPromise; // Wait for the database connection
+    await client.connect();
     const db = client.db("studybuddy");
     const userCollection = db.collection("accounts");
 
@@ -21,19 +21,17 @@ export async function GET(req: NextRequest) {
     if (!user) {
       return new Response("No Such User", { status: 404 });
     }
-    console.log(user.achievements)
-    console.log(!user.achievements);
-    if (!user.achievements) {
-      await userCollection.updateOne(
-        { email: email },
-        { $set: { achievements: [] } }
-      );
-      return Response.json([]);
-    }
+    // if (!user.achievements) {
+    //   await userCollection.updateOne(
+    //     { email: email },
+    //     { $set: { achievements: [] } }
+    //   );
+    //   return Response.json([]);
+    // }
 
     return Response.json([...user.achievements]);
-
   } catch (error) {
+    console.error(error);
     return new Response("Fatal Error occured while getting user achievements", {
       status: 500,
     });
@@ -80,10 +78,11 @@ export async function GET(req: NextRequest) {
 // }
 
 export async function POST(req: NextRequest) {
-  const email = req.nextUrl.searchParams.get("email")
+  const email = req.nextUrl.searchParams.get("email");
 
   try {
     const client = await clientPromise; // Wait for the database connection
+    await client.connect();
     const db = client.db("studybuddy");
     const userCollection = db.collection("accounts");
 
@@ -94,29 +93,33 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return new Response("No Such User", { status: 404 });
     }
-    
-    console.log(user.achievements)
-    console.log(!user.achievements);
-    if (!user.achievements) {
-      await userCollection.updateOne(
-        { email: email },
-        { $set: { achievements: [] } }
-      );
-    }
 
-    const data : Array<Document> = await req.json();
+    console.log(user.achievements);
+    console.log(!user.achievements);
+    // if (!user.achievements) {
+    //   await userCollection.updateOne(
+    //     { email: email },
+    //     { $set: { achievements: [] } }
+    //   );
+    // }
+
+    const data: Array<Document> = await req.json();
 
     await userCollection.updateOne(
       { email: email },
       //@ts-ignore
-      { $push: { "achievements": { $each: data } } } // Add taskData to tasks array
+      { $push: { achievements: { $each: data } } } // Add taskData to tasks array
     );
 
     return new Response("Inserted achievements Successfully", { status: 200 });
   } catch (error) {
-    return new Response("Fatal Error occured while inserting user achievements", {
-      status: 500,
-    });
+    console.error(error);
+    return new Response(
+      "Fatal Error occured while inserting user achievements",
+      {
+        status: 500,
+      }
+    );
     // res.status(500).json({ error: 'Error fetching data from MongoDB' });
   }
 }
@@ -146,11 +149,10 @@ export async function POST(req: NextRequest) {
 //       return new Response("Projects Already Empty and Deleted", { status: 201 })
 //     }
 
-
 //     await userCollection.updateOne(
 //       { email: email },
 //       //@ts-ignore
-//       { $pull: { "projects": { "projectid": projectid } } } 
+//       { $pull: { "projects": { "projectid": projectid } } }
 //     );
 //     return new Response("Deleted Projects Successfully", { status: 200 });
 //   } catch (error) {
