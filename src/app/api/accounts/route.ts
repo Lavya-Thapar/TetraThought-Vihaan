@@ -1,11 +1,11 @@
-import { User } from "@/types/user";
+import { Account } from "@/types/user";
 import { MongoClient } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const client = new MongoClient(process.env.MONGODB_URI!);
 
-  const new_account = (await req.json()) as User;
+  const new_account = (await req.json()) as Account;
   try {
     await client.connect();
     const database = client.db("studybuddy");
@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest) {
     | "photoBase64";
   if (!field || !email) throw new Error("Missing query parameters");
 
-  const new_account = (await req.json()) as User;
+  const new_account = (await req.json()) as Account;
   try {
     await client.connect();
     const database = client.db("studybuddy");
