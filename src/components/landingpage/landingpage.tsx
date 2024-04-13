@@ -69,7 +69,7 @@ export default function LandingPage() {
                       className="text-3xl font-bold tracking-tighter sm:text-5xl"
                       id="second"
                     >
-                      Your AI Study Buddy
+                      Your Study Buddy
                     </h2>
                     <p className="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                       Let the chatbot handle the details, so you can focus on
@@ -90,7 +90,7 @@ export default function LandingPage() {
                   Explore the features of our Study Buddy Chatbot.
                 </p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {features.map((feature, index) => {
                   return (
                     <Cards

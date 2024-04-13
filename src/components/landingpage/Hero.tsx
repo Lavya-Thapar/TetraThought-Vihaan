@@ -16,8 +16,8 @@ export default function Hero() {
               Study smarter, not harder
             </h1>
             <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
-              Your personal AI chatbot to help you stay organized, motivated,
-              and on track.
+              Your personal assistant to help you stay organized, motivated, and
+              on track.
             </p>
           </div>
           <div className="space-x-4">
